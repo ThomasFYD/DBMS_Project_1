@@ -1,7 +1,7 @@
 import requests
 
 # URL of the data file
-url = 'https://futurereadypa.org/home/getdatafile?id=15'
+url = 'https://www.education.pa.gov/Documents/Data%20and%20Statistics/Loan%20Cancellation/Public/0506%20Public%20Schools%20Percent%20Low%20Income.xls'
 
 # Make a request to the URL
 response = requests.get(url)
