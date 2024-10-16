@@ -1,0 +1,11 @@
+drop table if exists SchoolData;
+drop table if exists SchoolPerformanceE;
+drop table if exists SchoolPerformanceEHUP;
+drop table if exists SchoolPerformanceM;
+drop table if exists SchoolPerformanceMHUP;
+drop table if exists SchoolPerformanceS;
+drop table if exists SchoolPerformanceSHUP;
+drop table if exists PercentLowIncomebySchool;
+drop table if exists LowIncomeSchoolsDesignatedforTeacherLoan;
+drop table if exists DropOutRates;
+drop table if exists PublicDropOutRates;
