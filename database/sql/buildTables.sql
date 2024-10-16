@@ -1,21 +1,21 @@
 CREATE TABLE SchoolData (
-    DistrictName VARCHAR,
-    Name VARCHAR,
-    AUN INT,
+    DistrictName VARCHAR(50),
+    Name VARCHAR(50),
+    AUN INT PRIMARY KEY,
     Schl INT,
-    SchoolName VARCHAR,
-    SchoolAddressStreet VARCHAR,
-    SchoolAddressCity VARCHAR,
-    SchoolAddressState VARCHAR,
-    SchoolZipCode VARCHAR,
-    Website VARCHAR,
-    TelephoneNumber VARCHAR,
-    GradesOffered VARCHAR,
-    TitleISchool VARCHAR,
+    SchoolName VARCHAR(50),
+    SchoolAddressStreet VARCHAR(50),
+    SchoolAddressCity VARCHAR(50),
+    SchoolAddressState VARCHAR(50),
+    SchoolZipCode VARCHAR(50),
+    Website VARCHAR(50),
+    TelephoneNumber VARCHAR(50),
+    GradesOffered VARCHAR(50),
+    TitleISchool VARCHAR(50),
     SchoolEnrollment INT,
     PercentGiftedStudents DECIMAL,
-    IntermediateUnitName VARCHAR,
-    IntermediateUnitWebsite VARCHAR,
+    IntermediateUnitName VARCHAR(50),
+    IntermediateUnitWebsite VARCHAR(50),
     AmericanIndianAlaskanNative DECIMAL,
     Asian DECIMAL,
     BlackAfricanAmerican DECIMAL,
@@ -30,106 +30,105 @@ CREATE TABLE SchoolData (
     MaleSchool DECIMAL,
     FosterCare DECIMAL,
     Homeless DECIMAL,
-    MilitaryConnected DECIMAL,
-    PRIMARY KEY (AUN)
+    MilitaryConnected DECIMAL
 );
 
 CREATE TABLE SchoolPerformanceE(
-    Schl INT,
+    Schl INT PRIMARY KEY,
     Grade INT,
-    StudentGroupName VARCHAR,
+    StudentGroupName VARCHAR(50),
     NScored INT,
     PctAdvanced DECIMAL,
     PctProficient DECIMAL,
     PctBasic DECIMAL,
     PctBelowBasic DECIMAL,
     Growth DECIMAL,
-    PRIMARY KEY (Schl )
+    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl)
 );
+
 CREATE TABLE SchoolPerformanceEHUP(
-    Schl INT,
-    Grade VARCHAR,
-    StudentGroupName VARCHAR,
+    Schl INT PRIMARY KEY,
+    Grade VARCHAR(50),
+    StudentGroupName VARCHAR(50),
     NScored INT,
     PctAdvanced DECIMAL,
     PctProficient DECIMAL,
     PctBasic DECIMAL,
     PctBelowBasic DECIMAL,
     Growth DECIMAL,
-    PRIMARY KEY (Schl )
+    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl)
 );
+
 CREATE TABLE SchoolPerformanceM(
-    Schl INT,
-    Grade VARCHAR,
-    StudentGroupName VARCHAR,
+    Schl INT PRIMARY KEY,
+    Grade VARCHAR(50),
+    StudentGroupName VARCHAR(50),
     NScored INT,
     PctAdvanced DECIMAL,
     PctProficient DECIMAL,
     PctBasic DECIMAL,
     PctBelowBasic DECIMAL,
     Growth DECIMAL,
-    PRIMARY KEY (Schl )
+    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl)
 );
+
 CREATE TABLE SchoolPerformanceMHUP(
-    Schl INT,
-    Grade VARCHAR,
-    StudentGroupName VARCHAR,
+    Schl INT PRIMARY KEY,
+    Grade VARCHAR(50),
+    StudentGroupName VARCHAR(50),
     NScored INT,
     PctAdvanced DECIMAL,
     PctProficient DECIMAL,
     PctBasic DECIMAL,
     PctBelowBasic DECIMAL,
     Growth DECIMAL,
-    PRIMARY KEY (Schl )
+    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl)
 );
+
 CREATE TABLE SchoolPerformanceS(
-    Schl INT,
-    Grade VARCHAR,
-    StudentGroupName VARCHAR,
+    Schl INT PRIMARY KEY,
+    Grade VARCHAR(50),
+    StudentGroupName VARCHAR(50),
     NScored INT,
     PctAdvanced DECIMAL,
     PctProficient DECIMAL,
     PctBasic DECIMAL,
     PctBelowBasic DECIMAL,
     Growth DECIMAL,
-    PRIMARY KEY (Schl )
+    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl)
 );
+
 CREATE TABLE SchoolPerformanceSHUP(
-    Schl INT,
-    Grade VARCHAR,
-    StudentGroupName VARCHAR,
+    Schl INT PRIMARY KEY,
+    Grade VARCHAR(50),
+    StudentGroupName VARCHAR(50),
     NScored INT,
     PctAdvanced DECIMAL,
     PctProficient DECIMAL,
     PctBasic DECIMAL,
     PctBelowBasic DECIMAL,
     Growth DECIMAL,
-    PRIMARY KEY (Schl )
+    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl)
 );
+
 CREATE TABLE PercentLowIncomebySchool(
-    SchoolNumber INT,
+    SchoolNumber INT PRIMARY KEY,
     Percent DECIMAL,
-    PRIMARY KEY (SchoolNumber )
+    FOREIGN KEY (SchoolNumber) REFERENCES SchoolData(SchoolNumber)
 );
+
 CREATE TABLE LowIncomeSchoolsDesignatedforTeacherLoan(
-    SchoolNumber INT,
+    SchoolNumber INT PRIMARY KEY,
     Percent DECIMAL,
-    PRIMARY KEY (SchoolNumber )
+    FOREIGN KEY (SchoolNumber) REFERENCES SchoolData(SchoolNumber)
 );
+
 CREATE TABLE DropOutRates(
-    Schl INT,
+    Schl INT PRIMARY KEY,
     Enrollment INT,
     MaleDropouts INT,
     FemaleDropouts INT,
     TotalDropouts INT,
     DropOutRate DECIMAL,
-    PRIMARY KEY (Schl )
-);
-CREATE TABLE PublicDropOutRates(
-    Schl INT,
-    MaleDropouts INT,
-    FemaleDropouts INT,
-    TotalDropouts INT,
-    DropOutRate DECIMAL,
-    PRIMARY KEY (Schl )
+    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl)
 );
