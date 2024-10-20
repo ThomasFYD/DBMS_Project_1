@@ -1,21 +1,21 @@
 CREATE TABLE SchoolData (
-    DistrictName VARCHAR(50),
-    Name VARCHAR(50),
+    DistrictName VARCHAR(150),
+    Name VARCHAR(150),
     AUN INT PRIMARY KEY AUTO_INCREMENT,
     Schl INT NOT NULL,
-    SchoolName VARCHAR(50),
-    SchoolAddressStreet VARCHAR(50),
-    SchoolAddressCity VARCHAR(50),
-    SchoolAddressState VARCHAR(50),
-    SchoolZipCode VARCHAR(50),
-    Website VARCHAR(50),
-    TelephoneNumber VARCHAR(50),
-    GradesOffered VARCHAR(50),
-    TitleISchool VARCHAR(50),
+    SchoolName VARCHAR(150),
+    SchoolAddressStreet VARCHAR(150),
+    SchoolAddressCity VARCHAR(150),
+    SchoolAddressState VARCHAR(150),
+    SchoolZipCode VARCHAR(150),
+    Website VARCHAR(150),
+    TelephoneNumber VARCHAR(150),
+    GradesOffered VARCHAR(150),
+    TitleISchool VARCHAR(150),
     SchoolEnrollment INT,
     PercentGiftedStudents DECIMAL,
-    IntermediateUnitName VARCHAR(50),
-    IntermediateUnitWebsite VARCHAR(50),
+    IntermediateUnitName VARCHAR(150),
+    IntermediateUnitWebsite VARCHAR(150),
     AmericanIndianAlaskanNative DECIMAL,
     Asian DECIMAL,
     BlackAfricanAmerican DECIMAL,
@@ -36,7 +36,7 @@ CREATE TABLE SchoolData (
 CREATE TABLE SchoolPerformanceE(
     Schl INT PRIMARY KEY,
     Grade INT,
-    StudentGroupName VARCHAR(50),
+    StudentGroupName VARCHAR(150),
     NScored INT,
     PctAdvanced DECIMAL,
     PctProficient DECIMAL,
@@ -48,8 +48,8 @@ CREATE TABLE SchoolPerformanceE(
 
 CREATE TABLE SchoolPerformanceEHUP(
     Schl INT PRIMARY KEY,
-    Grade VARCHAR(50),
-    StudentGroupName VARCHAR(50),
+    Grade VARCHAR(150),
+    StudentGroupName VARCHAR(150),
     NScored INT,
     PctAdvanced DECIMAL,
     PctProficient DECIMAL,
@@ -61,8 +61,8 @@ CREATE TABLE SchoolPerformanceEHUP(
 
 CREATE TABLE SchoolPerformanceM(
     Schl INT PRIMARY KEY,
-    Grade VARCHAR(50),
-    StudentGroupName VARCHAR(50),
+    Grade VARCHAR(150),
+    StudentGroupName VARCHAR(150),
     NScored INT,
     PctAdvanced DECIMAL,
     PctProficient DECIMAL,
@@ -74,8 +74,8 @@ CREATE TABLE SchoolPerformanceM(
 
 CREATE TABLE SchoolPerformanceMHUP(
     Schl INT PRIMARY KEY,
-    Grade VARCHAR(50),
-    StudentGroupName VARCHAR(50),
+    Grade VARCHAR(150),
+    StudentGroupName VARCHAR(150),
     NScored INT,
     PctAdvanced DECIMAL,
     PctProficient DECIMAL,
@@ -87,8 +87,8 @@ CREATE TABLE SchoolPerformanceMHUP(
 
 CREATE TABLE SchoolPerformanceS(
     Schl INT PRIMARY KEY,
-    Grade VARCHAR(50),
-    StudentGroupName VARCHAR(50),
+    Grade VARCHAR(150),
+    StudentGroupName VARCHAR(150),
     NScored INT,
     PctAdvanced DECIMAL,
     PctProficient DECIMAL,
@@ -100,8 +100,8 @@ CREATE TABLE SchoolPerformanceS(
 
 CREATE TABLE SchoolPerformanceSHUP(
     Schl INT PRIMARY KEY,
-    Grade VARCHAR(50),
-    StudentGroupName VARCHAR(50),
+    Grade VARCHAR(150),
+    StudentGroupName VARCHAR(150),
     NScored INT,
     PctAdvanced DECIMAL,
     PctProficient DECIMAL,
