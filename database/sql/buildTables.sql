@@ -1,8 +1,8 @@
 CREATE TABLE SchoolData (
     DistrictName VARCHAR(50),
     Name VARCHAR(50),
-    AUN INT PRIMARY KEY,
-    Schl INT,
+    AUN INT PRIMARY KEY AUTO_INCREMENT,
+    Schl INT NOT NULL,
     SchoolName VARCHAR(50),
     SchoolAddressStreet VARCHAR(50),
     SchoolAddressCity VARCHAR(50),
@@ -43,7 +43,7 @@ CREATE TABLE SchoolPerformanceE(
     PctBasic DECIMAL,
     PctBelowBasic DECIMAL,
     Growth DECIMAL,
-    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl)
+    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl) ON DELETE CASCADE
 );
 
 CREATE TABLE SchoolPerformanceEHUP(
@@ -56,7 +56,7 @@ CREATE TABLE SchoolPerformanceEHUP(
     PctBasic DECIMAL,
     PctBelowBasic DECIMAL,
     Growth DECIMAL,
-    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl)
+    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl) ON DELETE CASCADE
 );
 
 CREATE TABLE SchoolPerformanceM(
@@ -69,7 +69,7 @@ CREATE TABLE SchoolPerformanceM(
     PctBasic DECIMAL,
     PctBelowBasic DECIMAL,
     Growth DECIMAL,
-    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl)
+    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl) ON DELETE CASCADE
 );
 
 CREATE TABLE SchoolPerformanceMHUP(
@@ -82,7 +82,7 @@ CREATE TABLE SchoolPerformanceMHUP(
     PctBasic DECIMAL,
     PctBelowBasic DECIMAL,
     Growth DECIMAL,
-    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl)
+    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl) ON DELETE CASCADE
 );
 
 CREATE TABLE SchoolPerformanceS(
@@ -95,7 +95,7 @@ CREATE TABLE SchoolPerformanceS(
     PctBasic DECIMAL,
     PctBelowBasic DECIMAL,
     Growth DECIMAL,
-    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl)
+    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl) ON DELETE CASCADE
 );
 
 CREATE TABLE SchoolPerformanceSHUP(
@@ -108,19 +108,19 @@ CREATE TABLE SchoolPerformanceSHUP(
     PctBasic DECIMAL,
     PctBelowBasic DECIMAL,
     Growth DECIMAL,
-    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl)
+    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl) ON DELETE CASCADE
 );
 
 CREATE TABLE PercentLowIncomebySchool(
-    SchoolNumber INT PRIMARY KEY,
+    SchoolNumber INT PRIMARY KEY AUTO_INCREMENT,
     Percent DECIMAL,
-    FOREIGN KEY (SchoolNumber) REFERENCES SchoolData(SchoolNumber)
+    FOREIGN KEY (SchoolNumber) REFERENCES SchoolData(Schl) ON DELETE CASCADE
 );
 
 CREATE TABLE LowIncomeSchoolsDesignatedforTeacherLoan(
-    SchoolNumber INT PRIMARY KEY,
+    SchoolNumber INT PRIMARY KEY AUTO_INCREMENT,
     Percent DECIMAL,
-    FOREIGN KEY (SchoolNumber) REFERENCES SchoolData(SchoolNumber)
+    FOREIGN KEY (SchoolNumber) REFERENCES SchoolData(Schl) ON DELETE CASCADE
 );
 
 CREATE TABLE DropOutRates(
@@ -130,5 +130,5 @@ CREATE TABLE DropOutRates(
     FemaleDropouts INT,
     TotalDropouts INT,
     DropOutRate DECIMAL,
-    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl)
+    FOREIGN KEY (Schl) REFERENCES SchoolData(Schl) ON DELETE CASCADE
 );
