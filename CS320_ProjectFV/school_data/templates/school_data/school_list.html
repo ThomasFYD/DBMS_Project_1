@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- school_list.html -->
+
+
+   <div class="mb-3">
+       <a href="{% url 'create_school' %}" class="btn btn-success">Add New School</a>
+   </div>
+   <table class="table table-striped">
+       <thead>
+           <tr>
+               <th>Name</th>
+               <th>District</th>
+               <th>Actions</th>
+           </tr>
+       </thead>
+       <tbody>
+           {% for school in schools %}
+               <tr>
+                   <td>{{ school.name }}</td>
+                   <td>{{ school.district_name }}</td>
+                   <td>
+                       <a href="{% url 'school_detail' school.schl %}" class="btn btn-primary">View</a>
+                       <a href="{% url 'update_school' school.schl %}" class="btn btn-info">Edit</a>
+                       <a href="{% url 'delete_school' school.schl %}" class="btn btn-danger">Delete</a>
+                   </td>
+               </tr>
+           {% endfor %}
+       </tbody>
+   </table>
+
+
+   <!-- Add buttons to view histograms -->
+   <div class="mt-4">
+    <a href="{% url 'low_income_histogram' %}" class="btn btn-warning">View Low Income Percentage Histogram</a>
+    <a href="{% url 'test_scores_histogram' %}" class="btn btn-warning">View Test Scores Histogram</a>
+   </div>
+

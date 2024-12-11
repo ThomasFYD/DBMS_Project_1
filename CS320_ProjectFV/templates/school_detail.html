@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}School Detail{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>School Detail</h2>
+    <dl class="row">
+        <dt class="col-sm-3">District Name</dt>
+        <dd class="col-sm-9">{{ school.district_name }}</dd>
+
+        <dt class="col-sm-3">Name</dt>
+        <dd class="col-sm-9">{{ school.name }}</dd>
+
+        <dt class="col-sm-3">AUN</dt>
+        <dd class="col-sm-9">{{ school.aun }}</dd>
+
+        <dt class="col-sm-3">SCHL</dt>
+        <dd class="col-sm-9">{{ school.schl }}</dd>
+
+        <dt class="col-sm-3">Address</dt>
+        <dd class="col-sm-9">{{ school.school_address_street }}, {{ school.school_address_city }}, {{ school.school_zip_code }}</dd>
+
+        <dt class="col-sm-3">Enrollment</dt>
+        <dd class="col-sm-9">{{ school.school_enrollment }}</dd>
+
+        <dt class="col-sm-3">% Gifted Students</dt>
+        <dd class="col-sm-9">{{ school.percent_gifted_student }}</dd>
+
+        <!-- Add other fields as necessary -->
+    </dl>
+
+    <a href="{% url 'school_update' school.schl %}" class="btn btn-warning">Edit</a>
+    <a href="{% url 'school_delete' school.schl %}" class="btn btn-danger">Delete</a>
+    <a href="{% url 'school_list' %}" class="btn btn-secondary">Back to List</a>
+</div>
+{% endblock %}
