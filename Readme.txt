@@ -14,4 +14,4 @@ Phase III:
 Database update by Isaac Odell and Ziyi Liu
 
 Phase IV:
-Web page and Application redo by Yide(Thomas) Fang, Ziyi Liu, Simon. Database update by Issac
+Web page and Application redo by Yide(Thomas) Fang, Ziyi Liu, Simon, Issac. Database update by Issac
