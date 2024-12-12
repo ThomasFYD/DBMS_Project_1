@@ -1,0 +1,233 @@
+{% extends "base.html" %}
+
+{% block title %}School Comparison{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>School Comparison</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>School One</h3>
+                <form id="search-school-1" method="get" class="mb-4">
+                    <div class="input-group">
+                        <input id="input-school-1" type="text" class="form-control" placeholder="Search for... ">
+                        <button class="btn btn-primary" type="submit">Check</button>
+                    </div>
+                </form>
+            <span id="span-school-1" style="font-size: 20px;color:red;"></span>
+            {% include 'school_selector.html' with prefix='school_1' %}
+        </div>
+        <div class="col-md-6">
+            <h3>School Two</h3>
+                <form id="search-school-2" method="get" class="mb-4">
+                    <div class="input-group">
+                        <input id="input-school-2" type="text" class="form-control" placeholder="Search for... ">
+                        <button class="btn btn-primary" type="submit">Check</button>
+                    </div>
+                </form>
+            <span id="span-school-2" style="font-size: 20px;color:red;"></span>
+            {% include 'school_selector.html' with prefix='school_2' %}
+        </div>
+    </div>
+
+<!-- Comparison Options -->
+<form id="comparison-form" method="post" class="mt-4">
+    {% csrf_token %}
+    <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" name="fields" value="school_enrollment" id="enrollment">
+        <label class="form-check-label" for="enrollment">Enrollment</label>
+    </div>
+    <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" name="fields" value="percent_gifted_student" id="gifted">
+        <label class="form-check-label" for="gifted">% Gifted Students</label>
+    </div>
+    <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" name="fields" value="low_income_percentage" id="low_income_percentage">
+        <label class="form-check-label" for="low_income_percentage">Low Income Percentage</label>
+    </div>
+    <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" name="fields" value="teacher_loan_cancellations" id="teacher_loan_cancellations">
+        <label class="form-check-label" for="teacher_loan_cancellations">Teacher Loan Cancellations</label>
+    </div>
+    <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" name="fields" value="percent_students_low_income" id="percent_students_low_income">
+        <label class="form-check-label" for="percent_students_low_income">% Students Low Income</label>
+    </div>
+    <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" name="fields" value="test_scores" id="test_scores">
+        <label class="form-check-label" for="test_scores">Test Scores</label>
+    </div>
+    <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" name="fields" value="dropout_rate" id="dropout_rate">
+        <label class="form-check-label" for="dropout_rate">Dropout Rate</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Compare</button>
+</form>
+
+    <!-- Display Comparison Chart -->
+
+    <img id="comparison-chart" src="" alt="Comparison Chart" class="img-fluid mt-4" style="display: none">
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    function updateOptions(prefix, currentSelect, nextSelectId, url) {
+        var selectedValue = $(currentSelect).val();
+        if (!selectedValue) {
+            $('#' + nextSelectId).empty().prop('disabled', true);
+            return;
+        }
+
+        $.getJSON(url.replace(':value:', encodeURIComponent(selectedValue)), function(data) {
+            var $nextSelect = $('#' + nextSelectId);
+            var options = '<option value="">Select...</option>';
+            if (Array.isArray(data)) {
+                data.forEach(function(item) {
+                    // 如果是学校数据（对象列表）
+                    if (typeof item === 'object' && item !== null && 'schl' in item && 'name' in item) {
+                        options += `<option value="${item.schl}">${item.name}</option>`;
+                    } else {
+                        // 否则是县数据（简单字符串列表）
+                        options += `<option value="${item}">${item}</option>`;
+                    }
+                });
+            }
+            $nextSelect.html(options).prop('disabled', false);
+        }).fail(function() {
+            console.error("Failed to fetch data");
+        });
+    }
+
+    // 绑定更改事件以动态加载县和学校选项
+    $(document).on('change', '.form-select', function() {
+        var prefix = $(this).attr('name').split('_')[0];
+        id = $(this).attr('name').split('_')[1];
+        console.log(prefix+id, 'id')
+        if ($(this).is('[name$="_district"]')) {
+            updateOptions(prefix, this, prefix+'_'+id+'_county', '{% url "get_counties" ":value:" %}');
+        } else if ($(this).is('[name$="_county"]')) {
+            var district_value = $('#school_'+id+'_district').val();
+            var originalUrl = '{% url "get_schools" ":value:" ":value:" %}';
+            var url = originalUrl.replace(/:value:(?=([^"]*"[^"]*")*[^"]*$)/, encodeURIComponent(district_value));
+            console.log(url, 'url')
+            updateOptions(prefix, this, prefix+'_'+id+'_school', url);
+        }
+    });
+
+    // 表单提交处理
+$('#comparison-form').on('submit', function(event) {
+            event.preventDefault();
+
+            // 检查是否选择了两个学校和至少一个比较字段
+            var school1 = $('#school_1_school').val();
+            var school2 = $('#school_2_school').val();
+            var fields = $('input[name="fields"]:checked').map(function() {
+                return this.value;
+            }).get();
+            console.log($('#span-school-1').attr('name')=='query-success', $('#span-school-1').attr('name'));
+            if ($('#span-school-1').attr('name')=='query-success' && $('#span-school-2').attr('name')=='query-success'){
+                var school_input1 = $('#input-school-1').val();
+                var school_input2 = $('#input-school-2').val();
+            }else {
+                var school_input1 = null;
+                var school_input2 = null;
+            }
+
+            if ((!school_input1 || !school_input2) && (!school1 || !school2 || fields.length === 0)) {
+                alert("Please select two schools and at least one field to compare. Or input two schools name or check school name.");
+                return;
+            }
+
+            // 构建包含所有选择信息的JSON对象
+            var formData = {
+                schools: {
+                    school_1: {
+                        district: $('#school_1_district').val(),
+                        county: $('#school_1_county').val(),
+                        school: school1
+                    },
+                    school_2: {
+                        district: $('#school_2_district').val(),
+                        county: $('#school_2_county').val(),
+                        school: school2
+                    },
+                    input_school: {
+                        school_input_1: school_input1,
+                        school_input_2: school_input2
+                    }
+                },
+                fields: fields
+            };
+
+            // 发送AJAX请求到后端
+            $.ajax({
+                url: '{% url "school_comparison" %}',
+                type: 'POST',
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function(response) {
+                    if (response.comparison_image) {
+                        $('#comparison-chart').attr('src', response.comparison_image);
+                        $('#comparison-chart').show();
+                    }
+                    if (response.selected_fields) {
+                        console.log("Selected Fields:", response.selected_fields);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error("Failed to submit the form", jqXHR.responseJSON ? jqXHR.responseJSON.error : textStatus);
+                }
+            });
+        });
+
+    // 表单提交处理
+$('#search-school-1').on('submit', function(event) {
+            event.preventDefault();
+            console.log('submit');
+
+            // 检查是否选择了两个学校和至少一个比较字段
+            var school1 = $('#input-school-1').val();
+            console.log(school1, 'school1')
+
+            // 发送AJAX请求到后端
+            $.ajax({
+                url: '{% url "search_school" %}',
+                type: 'POST',
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                contentType: 'application/json',
+                data: JSON.stringify({"query": school1}),
+                success: function(response) {
+                    $('#span-school-1').text('success: school exists').css('color', 'green').attr('name', 'query-success');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    $('#span-school-1').text('error: school not exists, please check the input').css('color','red');
+                }
+            });
+        });
+$('#search-school-2').on('submit', function(event) {
+            event.preventDefault();
+
+            // 检查是否选择了两个学校和至少一个比较字段
+            var school2 = $('#input-school-2').val();
+
+            // 发送AJAX请求到后端
+            $.ajax({
+                url: '{% url "search_school" %}',
+                type: 'POST',
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                contentType: 'application/json',
+                data: JSON.stringify({"query": school2}),
+                success: function(response) {
+                    $('#span-school-2').text('success: school exists').css('color', 'green').attr('name', 'query-success');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    $('#span-school-2').text('error: school not exists, please check the input').css('color', 'red');
+                }
+            });
+        });
+});
+</script>
+{% endblock %}

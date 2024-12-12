@@ -1,0 +1,14 @@
+<div class="mb-4">
+    <select class="form-select" name="{{ prefix }}_district" id="{{ prefix }}_district">
+        <option value="">Select District</option>
+        {% for district in districts %}
+        <option value="{{ district }}">{{ district }}</option>
+        {% endfor %}
+    </select>
+    <select class="form-select mt-2" name="{{ prefix }}_county" id="{{ prefix }}_county" disabled>
+        <option value="">Select County</option>
+    </select>
+    <select class="form-select mt-2" name="{{ prefix }}" id="{{ prefix }}_school" disabled>
+        <option value="">Select School</option>
+    </select>
+</div>
