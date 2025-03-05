@@ -1,5 +1,6 @@
 This is the Project 1 of class CS 320 - Database Management. 
 Group members are Yide(Thomas) Fang, Ziyi Liu, Hanzhe(Simon) Zhou and Isaac Odell.
+Mainly focusing on creating an app that help users to decide which school should choose by making comparsion between different area and different schools.
 
 Phase I:
 crawler.py by Yide(Thomas) Fang is the code for downloading the excel file from the web link. Need manually edit the link you want to download.
